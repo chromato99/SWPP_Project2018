@@ -1,3 +1,6 @@
+//Software Programing Pattern Clss's term project
+//Writed in 2018.DEC
+
 #include<stdio.h>
 #include<stdlib.h>
 
