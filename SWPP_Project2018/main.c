@@ -19,9 +19,9 @@ typedef struct schedule {
     struct schedule* prev;
 }SD;
 
-int sd_count;
-SD* start;
-SD* end;
+int sd_count;  // count of SD structs
+SD* start;  // start address of SD
+SD* end;  // end address of SD
 
 int main() {
 	printf("test");
