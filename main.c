@@ -24,7 +24,7 @@ SD* start;
 SD* end;
 
 int main() {
-
+	printf("test");
 
     return 0;
 }
