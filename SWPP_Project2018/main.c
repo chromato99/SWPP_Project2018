@@ -24,7 +24,12 @@ SD* start;  // start address of SD
 SD* end;  // end address of SD
 
 int main() {
-	printf("test");
+	int num;
+	encrypt();
+	while (num) {
+		num = mainWork();
+	}
+	decrypt();
 
     return 0;
 }
