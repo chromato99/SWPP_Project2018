@@ -27,18 +27,36 @@
     <ClCompile Include="printSchedule.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="hanoi.c">
+    <ClCompile Include="scheduleFile.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="tetris.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleController.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="GameDrawer.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockMaker.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockController.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockDetecter.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="addSearchDelete.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Project_Header.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="printSchedule.h">
+    <ClInclude Include="tetris.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

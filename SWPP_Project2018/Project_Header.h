@@ -3,6 +3,8 @@
 #include<stdlib.h>
 #include<string.h>
 #include<Windows.h>
+#include <conio.h>
+#include"tetris.h"
 
 typedef struct schedule {
 	char title[81];
@@ -18,3 +20,13 @@ typedef struct schedule {
 	struct schedule* next;
 	struct schedule* prev;
 }SD;
+
+//addSearchDelete
+int startASD();
+void add();
+void search();
+void del();
+
+//scheduleFile
+int readFile();
+int saveFile();
