@@ -139,8 +139,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="addSearchDelete.c" />
+    <ClCompile Include="hanoi.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="printSchedule.c" />
     <ClCompile Include="temp.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="addSearchDelete.h" />
+    <ClInclude Include="printSchedule.h" />
+    <ClInclude Include="Project_Header.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
