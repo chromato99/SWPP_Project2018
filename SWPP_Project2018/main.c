@@ -20,12 +20,14 @@ MM* mm_current = NULL;
 MM* mm_prev = NULL;
 MM* mm_end = NULL;
 
+CONSOLE_CURSOR_INFO cursorInfo = { 0, };  //cursor setting
+
 void first_title();
 
 int main() {
 	char check = NULL, garbage;
 	int num = 1;
-	CONSOLE_CURSOR_INFO cursorInfo = { 0, };
+	
 	cursorInfo.dwSize = 1;
 	cursorInfo.bVisible = FALSE;
 	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);  //hide cursor
@@ -47,13 +49,19 @@ int main() {
 	cursorInfo.bVisible = FALSE;
 	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);  //hide cursor
 
+	int i = 1;
 	while (num != 0) { //work until return value 0
 		num = printFirstMenu();
+		i = 1;
 		if (num == 1) {
-			printTable();
+			while (i != 0) {
+				i = printTable();
+			}
 		}
 		else if (num == 2) {
-			printMemoList();
+			while (i != 0) {
+				i = printMemoList();
+			}
 		}
 	}
 	saveFile();
@@ -73,7 +81,7 @@ void first_title() {
 	while (1) {
 		if (kbhit()) { // 키보드가 눌렸나 체크 
 			c = getch(); // 눌린 값 대입
-		if (c == 13)
+		if (c == 13)  //check ENTER
 				break;
 		}
 	}

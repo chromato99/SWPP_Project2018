@@ -7,6 +7,15 @@ extern SD* sd_current;
 extern SD* sd_prev;
 extern SD* sd_end;  // end address of SD
 
+extern int mm_count;
+extern MM* mm_start;
+extern MM* mm_next;
+extern MM* mm_current;
+extern MM* mm_prev;
+extern MM* mm_end;
+
+extern CONSOLE_CURSOR_INFO cursorInfo;
+
 void gotoxy(int x, int y)
 {
 	COORD Pos = { x,y };
@@ -68,77 +77,52 @@ void printSchedule() {
 
 }
 
-void printTable() {
-	while (1) {
-		system("cls");
-		gotoxy(0, 0);
-		int time = 9;
-		int day = 0;
-		int col = 0;
-		char input = "";
+int printTable() {
+	system("cls");
+	gotoxy(0, 0);
+	int time = 9;
+	int day = 0;
+	int col = 0;
+	char input = "";
 
 
-		// tab : array
-		// title
-		printf("\n");
-		printf("\t\t");
-		printf("<<\t T\tI\tM\tE \tT\tA\tB\tL\tE \t>>");
-		printf("\n\n\n");
-		printf("Week ");
-		for (int top = 0; top < 55; top++) { // table top
-			printf("= ");
-		}
-		printf("\n\n");
+	// tab : array
+	// title
+	printf("\n");
+	printf("\t\t");
+	printf("<<\t T\tI\tM\tE \tT\tA\tB\tL\tE \t>>");
+	printf("\n\n\n");
+	printf("Week ");
+	for (int top = 0; top < 55; top++) { // table top
+		printf("= ");
+	}
+	printf("\n\n");
 
-		// table day of week_individual line
-		printf("  ");
-		printf("|");
-		printf("\tSunday\t  |\tMonday\t  |    Tuesday\t  |   Wednesday   |    Thursday\t  |     Friday\t  |   Saturday  ");
-		printf("  ");
-		printf("|");
-		printf("\n\n");
-
-
-		printf("08 ");
-		for (int row = 0; row < 56; row++) {
-			printf("- ");
-		}
-		printf("\n");
-		for (int tab = 0; tab < 2; tab++) {
-			printf("\t");
-		}
-		printf("\n");
-		for (int side = 0; side < 15; side++) {
+	// table day of week_individual line
+	printf("  ");
+	printf("|");
+	printf("\tSunday\t  |\tMonday\t  |    Tuesday\t  |   Wednesday   |    Thursday\t  |     Friday\t  |   Saturday  ");
+	printf("  ");
+	printf("|");
+	printf("\n\n");
 
 
-			for (int i = 0; i < 3; i++) {
-				printf("  ");
-				for (int col = 0; col < 7; col++)
-				{
-					printf("|");
-					for (int tab = 0; tab < 2; tab++) {
-						printf("\t");
-					}
-					printf("  ");
-				}
-				printf("|");
-				printf("\n\n");
-			}
+	printf("08 ");
+	for (int row = 0; row < 56; row++) {
+		printf("- ");
+	}
+	printf("\n");
+	for (int tab = 0; tab < 2; tab++) {
+		printf("\t");
+	}
+	printf("\n");
+	for (int side = 0; side < 15; side++) {
 
-			printf("%d ", time);
-			if (time >= 9) {
-				time++;
-			}
-			for (int row = 0; row < 56; row++) {
-				printf("- ");
-			}
-			printf("\n\n");
-		}
-		for (int i = 0; i < 3; i++) {   // individual line
+
+		for (int i = 0; i < 3; i++) {
 			printf("  ");
 			for (int col = 0; col < 7; col++)
 			{
-
 				printf("|");
 				for (int tab = 0; tab < 2; tab++) {
 					printf("\t");
@@ -150,30 +134,60 @@ void printTable() {
 		}
 
 		printf("%d ", time);
-		for (int floor = 0; floor < 56; floor++) {
-			printf("= ");
+		if (time >= 9) {
+			time++;
 		}
+		for (int row = 0; row < 56; row++) {
+			printf("- ");
+		}
+		printf("\n\n");
+	}
+	for (int i = 0; i < 3; i++) {   // individual line
+		printf("  ");
+		for (int col = 0; col < 7; col++)
+		{
 
-		sd_current = sd_start;
+			printf("|");
+			for (int tab = 0; tab < 2; tab++) {
+				printf("\t");
+			}
+			printf("  ");
+		}
+		printf("|");
+		printf("\n\n");
+	}
 
-		while (sd_current) {
-			printSchedule();
-			sd_current = sd_current->next;
-		}
-		int n = 0;
-		n = printTableMenu();
-		if (n == 1) {
-			gotoxy(0, 144);
-			add_sd();
-		}
-		else if (n == 2) {
-			gotoxy(0, 144);
-			del_sd();
-		}
-		else if (n == 3) {
-			gotoxy(0, 144);
-			search_sd();
-		}
+	printf("%d ", time);
+	for (int floor = 0; floor < 56; floor++) {
+		printf("= ");
+	}
+
+	sd_current = sd_start;
+
+	while (sd_current) {
+		printSchedule();
+		sd_current = sd_current->next;
+	}
+
+	int n = 0;
+	n = printTableMenu();
+	if (n == 1) {
+		gotoxy(0, 144);
+		add_sd();
+		return 1;
+	}
+	else if (n == 2) {
+		gotoxy(0, 144);
+		del_sd();
+		return 2;
+	}
+	else if (n == 3) {
+		gotoxy(0, 144);
+		search_sd();
+		return 3;
+	}
+	else if (n == 0) {
+		return 0;
 	}
 }
 
@@ -181,6 +195,10 @@ int printTableMenu() {
 	char key;
 	int x = 1;
 	int check = 1;
+
+	gotoxy(0, 142);
+	cursorInfo.bVisible = FALSE;
+	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);  //hide cursor
 
 	printf(" > Add schedule    Delete Schedule    Search Detail    Back to first menu\n");
 
@@ -190,7 +208,7 @@ int printTableMenu() {
 			if (key == 75) { //left direction key
 				
 				if (check == 2) {
-					gotoxy(--x, 142);
+					gotoxy(x, 142);
 					putc(' ', stdout);
 					x = 1;
 					gotoxy(x, 142);
@@ -198,7 +216,7 @@ int printTableMenu() {
 					check--;
 				}
 				else if (check == 3) {
-					gotoxy(--x, 142);
+					gotoxy(x, 142);
 					putc(' ', stdout);
 					x = 17;
 					gotoxy(x, 142);
@@ -206,7 +224,7 @@ int printTableMenu() {
 					check--;
 				}
 				else if (check == 4) {
-					gotoxy(--x, 142);
+					gotoxy(x, 142);
 					putc(' ', stdout);
 					x = 36;
 					gotoxy(x, 142);
@@ -215,9 +233,9 @@ int printTableMenu() {
 				}
 
 			}
-			else if (key == 77) { //lower direction key
+			else if (key == 77) { //right direction key
 				if (check == 1) {
-					gotoxy(--x, 142);
+					gotoxy(x, 142);
 					putc(' ', stdout);
 					x = 17;
 					gotoxy(x, 142);
@@ -225,7 +243,7 @@ int printTableMenu() {
 					check++;
 				}
 				else if (check == 2) {
-					gotoxy(--x, 142);
+					gotoxy(x, 142);
 					putc(' ', stdout);
 					x = 36;
 					gotoxy(x, 142);
@@ -233,7 +251,7 @@ int printTableMenu() {
 					check++;
 				}
 				else if (check == 3) {
-					gotoxy(--x, 142);
+					gotoxy(x, 142);
 					putc(' ', stdout);
 					x = 53;
 					gotoxy(x, 142);
@@ -259,7 +277,75 @@ int printTableMenu() {
 	}
 }
 
-void printMemoList() {
+int printMemoList() {
 	system("cls");
+	printf("[Memo List]\n");
+	mm_current = mm_start;
 
+	while (mm_current) {
+		fprintf(stdout, "   %d:%d:%d  ", mm_current->year, mm_current->month, mm_current->date);
+		puts(mm_current->title);
+	}
+
+	fprintf(stdout, "\n\nPress 'a' to add memo\n");
+	fprintf(stdout, "Press 'd' to delete memo\n");
+	fprintf(stdout, "Press Backspace to back to menu\n\n");
+
+	char key;
+	int y = 1;
+	while (1) {
+		if (kbhit()) {  //keyboard input
+			key = getch();
+			if (key == 80 && y > 1) { //upper direction key
+				gotoxy(1, y--);
+				putc(' ', stdout);
+				gotoxy(1, y);
+				putc('>', stdout);
+			}
+			else if (key == 72 && y < mm_count) { //lower direction key
+				gotoxy(1, y++);
+				putc(' ', stdout);
+				gotoxy(1, y);
+				putc('>', stdout);
+			}
+			else if (key == 13) {  //enter key
+				printMemo(--y);
+			}
+			else if (key == 'a') {
+				add_mm();
+				return 1;
+			}
+			else if (key == 'd') {
+				del_mm(--y);
+				return 2;
+			}
+			else if (key == 8) {
+				return 0;
+			}
+		}
+	}
+}
+
+void printMemo(int n) {
+	system("cls");
+	mm_current = mm_start;
+	for (int i = 0; i < n; i++) {
+		mm_current = mm_current->next;
+	}
+
+	printf("Title : ");
+	puts(mm_current->title);
+	printf("%d:%d:%d\n\n", mm_current->year, mm_current->month, mm_current->date);
+	puts(mm_current->memo);
+	
+
+	char key;
+	while (1) {
+		if (kbhit()) {  //keyboard input
+			key = getch();
+			if (key == 8) {
+				return 0;
+			}
+		}
+	}
 }

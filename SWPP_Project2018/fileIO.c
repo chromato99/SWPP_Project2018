@@ -21,7 +21,7 @@ extern MM* mm_end;
 int readFile() {                                                   //파일을 열고 데이터를 읽기
 
 	fprintf(stdout, "\nEnter your ID : ");
-	gets(fileID);
+	fgets(fileID, 81, stdin);
 	strcpy(fileID_sd, fileID);
 	strcpy(fileID_mm, fileID);
 	strcat(fileID_sd, "_sd.bin");

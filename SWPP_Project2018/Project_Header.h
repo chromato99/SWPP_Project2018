@@ -33,6 +33,8 @@ typedef struct schedule {
 void add_sd();
 void search_sd();
 void del_sd();
+void add_mm();
+void del_mm(int num);
 
 //fileIO
 int readFile();
@@ -40,8 +42,8 @@ int saveFile();
 
 //printData
 int printFirstMenu();
-void printTable();
+int printTable();
 int printTableMenu();
 void printSchedule();
-void printMemoList();
-void printMemo();
+int printMemoList();
+void printMemo(int n);
