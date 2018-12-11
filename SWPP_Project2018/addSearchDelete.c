@@ -1,115 +1,122 @@
 #include"Project_Header.h"
 
 extern int sd_count;  // count of SD structs
-extern SD* start;  // start address of SD
-extern SD* next;
-extern SD* current;
-extern SD* prev;
-extern SD* end;  // end address of SD
+extern SD* sd_start;  // start address of SD
+extern SD* sd_next;
+extern SD* sd_current;
+extern SD* sd_prev;
+extern SD* sd_end;  // end address of SD
 
-int startASD() {
-	int input;
-	fprintf(stdout, "------------------------------------------------------------------------------------------");
-	fprintf(stdout, "\n\n0. Show Schedule\n1. Add schedule\n2. Delete scedule\n3. Search schedule\n-1. end program\n\nInput : ");
-	fscanf(stdin, "%d", &input);
-	if (input == 0) {
+extern int mm_count;
+extern MM* mm_start;
+extern MM* mm_next;
+extern MM* mm_current;
+extern MM* mm_prev;
+extern MM* mm_end;
 
-	}
-	if (input == 1) {
-		add();
-	}
-	else if (input == 2) {
-		del();
-	}
-	else if (input == 3) {
-		search();
-	}
-	else if (input == -1)
-		return -1;
-}
-
-void add() {
-	SD *newnode;
-	newnode = (SD*)malloc(sizeof(SD));
+void add_sd() {
+	SD *newnode_sd;
+	newnode_sd = (SD*)malloc(sizeof(SD));
 	fprintf(stdout, "Enter Title : ");
-	fgets(stdin, 81, newnode->title);
+	fgets(stdin, 81, newnode_sd->title);
 	fprintf(stdout, "Enter Subject : ");
-	fgets(stdin, 81, newnode->subject);
+	fgets(stdin, 81, newnode_sd->subject);
 	fprintf(stdout, "Enter Place : ");
-	fgets(stdin, 81, newnode->place);
+	fgets(stdin, 81, newnode_sd->place);
 	fprintf(stdout, "Enter People : ");
-	fgets(stdin, 81, newnode->people);
-	fprintf(stdout, "Enter Year(ex 2018) : ");
-	fscanf(stdin, "%d", &newnode->year);
-	fprintf(stdout, "Enter Month(ex 05) : ");
-	fscanf(stdin, "%d", &newnode->month);
-	fprintf(stdout, "Enter Date(ex 05) : ");
-	fscanf(stdin, "%d", &newnode->date);
+	fgets(stdin, 81, newnode_sd->people);
+	
 	fprintf(stdout, "Enter Start Time (8:00 ~ 24:00) : ");
-	fscanf(stdin, "%d", &newnode->start_time);
-	if (newnode->start_time < 8 || newnode->start_time > 24) {
+	fscanf(stdin, "%d", &newnode_sd->start_time);
+	if (newnode_sd->start_time < 8 || newnode_sd->start_time > 24) {
 		fprintf(stdout, "Enter Start Time (8:00 ~ 24:00) : ");
-		fscanf(stdin, "%d", &newnode->start_time);
+		fscanf(stdin, "%d", &newnode_sd->start_time);
 	}
 	fprintf(stdout, "Enter End Time (8:00 ~ 24:00) : ");
-	fscanf(stdin, "%d", &newnode->end_time);
-	if (newnode->end_time < 8 || newnode->end_time > 24) {
+	fscanf(stdin, "%d", &newnode_sd->end_time);
+	if (newnode_sd->end_time < 8 || newnode_sd->end_time > 24) {
 		fprintf(stdout, "Enter End Time (8:00 ~ 24:00) : ");
-		fscanf(stdin, "%d", &newnode->end_time);
+		fscanf(stdin, "%d", &newnode_sd->end_time);
 	}
 	fprintf(stdout, "Enter other details\n");
-	fgets(stdin, 400, newnode->etc);
-	newnode->next = start;
-	start = newnode;
+	fgets(stdin, 400, newnode_sd->etc);
+	newnode_sd->next = sd_start;
+	sd_start = newnode_sd;
 	sd_count++;
+	system("pause");
 }
 
-void del() {
+void del_sd() {
 
-	current = start;
+	sd_current = sd_start;
 	char del[81];
 	fprintf(stdout, "\n\nEnter title of the schedule you want to delete\n");
 	fgets(stdin, 81, del);
-	while (current) {
-		prev = current->prev;
-		next = current->next;
+	while (sd_current) {
+		sd_prev = sd_current->prev;
+		sd_next = sd_current->next;
 
-		if (strcmp(current->title, del) == 0) {
-			prev->next = next;
+		if (strcmp(sd_current->title, del) == 0) {
+			sd_prev->next = sd_next;
 			fprintf(stdout, "\n*Deleted Success!*\n");
-			break;
+			sd_count--;
+			system("pause");
+			return;
 		}
 		
-		current = current->next;
+		sd_current = sd_current->next;
 	}
-	sd_count--;
+	fprintf(stdout, "\nFail to delete data\nNo such file name\n");
+	system("pause");
 }
 
-void search() {
+void search_sd() {
 	char search[81];
-	current = start;
+	sd_current = sd_start;
 	printf(stdout, "\n\nEnter title of the schedule you want to search\n");
 	fgets(stdin, 81, search);
-	while (current) {
-		if (strcmp(current->title, search) == 0) {
+	while (sd_current) {
+		if (strcmp(sd_current->title, search) == 0) {
 			fprintf(stdout, "Title : ");
-			fputs(stdout, current->title);
+			fputs(stdout, sd_current->title);
 			fprintf(stdout, "Subject : ");
-			fputs(stdout, current->subject);
+			fputs(stdout, sd_current->subject);
 			fprintf(stdout, "Place : ");
-			fputs(stdout, current->place);
+			fputs(stdout, sd_current->place);
 			fprintf(stdout, "People : ");
-			fputs(stdin, current->people);
-			fprintf(stdout, "Date(yyyy:mm:dd) : %d:%d:%d", current->year, current->month, current->date);
-			fprintf(stdout, "Start Time : %d", current->start_time);
-			fprintf(stdout, "End Time : ", current->end_time);
+			fputs(stdin, sd_current->people);
+			if (sd_current->dow == 0) {
+				fprintf(stdout, "Day of the week : Sunday\n");
+			}
+			else if (sd_current->dow == 1) {
+				fprintf(stdout, "Day of the week : Monday\n");
+			}
+			else if (sd_current->dow == 2) {
+				fprintf(stdout, "Day of the week : Tuesday\n");
+			}
+			else if (sd_current->dow == 3) {
+				fprintf(stdout, "Day of the week : Wednesday\n");
+			}
+			else if (sd_current->dow == 4) {
+				fprintf(stdout, "Day of the week : Turthday\n");
+			}
+			else if (sd_current->dow == 5) {
+				fprintf(stdout, "Day of the week : Friday\n");
+			}
+			else if (sd_current->dow == 6) {
+				fprintf(stdout, "Day of the week : Saturday\n");
+			}
+			fprintf(stdout, "Start Time : %d", sd_current->start_time);
+			fprintf(stdout, "End Time : ", sd_current->end_time);
 			fprintf(stdout, "Other details\n");
-			fputs(stdout, current->etc);
-			break;
+			fputs(stdout, sd_current->etc);
+			system("pause");
+			return;
 		}
-		current = current->next;
+		sd_current = sd_current->next;
 	}
-	if (current == NULL) {
+	if (sd_current == NULL) {
 		fprintf(stdout, "\nFail to find the schedule\n");
 	}
+	system("pause");
 }

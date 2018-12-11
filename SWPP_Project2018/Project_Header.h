@@ -6,14 +6,22 @@
 #include <conio.h>
 #include"tetris.h"
 
+typedef struct memo {
+	char title[81];
+	int year;
+	int month;
+	int date;
+	char memo[1000];
+	struct memo* next;
+	struct memo* prev;
+}MM;
+
 typedef struct schedule {
 	char title[81];
 	char subject[81];
 	char place[81];
 	char people[81];
-	int year;
-	int month;
-	int date;
+	int dow;  //day of the week
 	int start_time;
 	int end_time;
 	char etc[400];
@@ -22,11 +30,18 @@ typedef struct schedule {
 }SD;
 
 //addSearchDelete
-int startASD();
-void add();
-void search();
-void del();
+void add_sd();
+void search_sd();
+void del_sd();
 
-//scheduleFile
+//fileIO
 int readFile();
 int saveFile();
+
+//printData
+int printFirstMenu();
+void printTable();
+int printTableMenu();
+void printSchedule();
+void printMemoList();
+void printMemo();

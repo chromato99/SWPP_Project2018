@@ -24,12 +24,6 @@
     <ClCompile Include="addSearchDelete.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="printSchedule.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="scheduleFile.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="tetris.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -49,6 +43,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="GameManager.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="printData.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="fileIO.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

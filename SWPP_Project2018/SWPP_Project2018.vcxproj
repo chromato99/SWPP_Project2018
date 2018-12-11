@@ -147,8 +147,8 @@
     <ClCompile Include="GameDrawer.c" />
     <ClCompile Include="GameManager.c" />
     <ClCompile Include="main.c" />
-    <ClCompile Include="printSchedule.c" />
-    <ClCompile Include="scheduleFile.c" />
+    <ClCompile Include="printData.c" />
+    <ClCompile Include="fileIO.c" />
     <ClCompile Include="temp.c" />
     <ClCompile Include="tetris.c" />
   </ItemGroup>

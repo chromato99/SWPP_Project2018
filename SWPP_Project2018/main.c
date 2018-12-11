@@ -3,22 +3,39 @@
 #include"Project_Header.h"
 
 char fileID[81];
-int sd_count;  // count of SD structs
-SD* start = NULL;  // start address of SD
-SD* next = NULL;
-SD* current = NULL;
-SD* prev = NULL;
-SD* end = NULL;  // end address of SD
+char fileID_sd[81];  //file ID for time table
+char fileID_mm[81];  //file ID for memo
+char fileID_pw[81]; //file ID for password
+int sd_count = 0;  // count of SD structs
+SD* sd_start = NULL;  // start address of SD
+SD* sd_next = NULL;
+SD* sd_current = NULL;
+SD* sd_prev = NULL;
+SD* sd_end = NULL;  // end address of SD
+
+int mm_count = 0;
+MM* mm_start = NULL;
+MM* mm_next = NULL;
+MM* mm_current = NULL;
+MM* mm_prev = NULL;
+MM* mm_end = NULL;
 
 void first_title();
 
 int main() {
 	char check = NULL, garbage;
 	int num = 1;
+	CONSOLE_CURSOR_INFO cursorInfo = { 0, };
+	cursorInfo.dwSize = 1;
+	cursorInfo.bVisible = FALSE;
+	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);  //hide cursor
+
 	first_title();
 
 	system("cls");
 
+	cursorInfo.bVisible = TRUE;
+	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);  //show cursor for entering ID
 	while (readFile()) {
 		printf("\n\nDo you want to continue with new ID?(y/n) : ");  //존재하지 않는 아이디일 경우 그대로 계속할지 묻는다.
 		fscanf(stdin, "%c", &check);
@@ -27,9 +44,17 @@ int main() {
 			break;
 		}
 	}
+	cursorInfo.bVisible = FALSE;
+	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);  //hide cursor
 
-	while (num != -1) {  //work until return value is -1
-		num = startASD();
+	while (num != 0) { //work until return value 0
+		num = printFirstMenu();
+		if (num == 1) {
+			printTable();
+		}
+		else if (num == 2) {
+			printMemoList();
+		}
 	}
 	saveFile();
 
@@ -44,11 +69,11 @@ void first_title() {
 	printf("\t Program is written by KIM BEOMGI, HWANG SUJEONG, SEO JIWON, KWON UHYEOK\n");
 	printf("\t Made for SWPP Term Project\n\n");
 	printf("\t Last update in 2018.DEC\n");
-	printf("\n\n\n\t\t\t >Press 'q' to continue");
+	printf("\n\n\n\t\t\t >Press ENTER to continue");
 	while (1) {
-		if (_kbhit()) { // 키보드가 눌렸나 체크 
-			c = _getch(); // 눌린 값 대입
-		if (c == 'q')
+		if (kbhit()) { // 키보드가 눌렸나 체크 
+			c = getch(); // 눌린 값 대입
+		if (c == 13)
 				break;
 		}
 	}
