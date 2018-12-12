@@ -17,6 +17,7 @@ extern MM* mm_end;
 extern CONSOLE_CURSOR_INFO cursorInfo;
 
 void add_sd() {
+	char dow[16];
 	SD *newnode_sd;
 	newnode_sd = (SD*)malloc(sizeof(SD));
 	cursorInfo.bVisible = TRUE;
@@ -29,8 +30,33 @@ void add_sd() {
 	fgets(newnode_sd->place, 81, stdin);
 	fprintf(stdout, "Enter People : ");
 	fgets(newnode_sd->people, 81, stdin);
-	
+	fprintf(stdout, "Enter day of the week : ");
+	fgets(dow, 16, stdin);
+	strupr(dow);  //change to lower character
+	if (strcmp(dow, "sun") == 0 || strcmp(dow, "sunday") == 0) {
+		newnode_sd->dow = 0;
+	}
+	else if (strcmp(dow, "mon") == 0 || strcmp(dow, "monday") == 0) {
+		newnode_sd->dow = 1;
+	}
+	else if (strcmp(dow, "tue") == 0 || strcmp(dow, "tuesday") == 0) {
+		newnode_sd->dow = 2;
+	}
+	else if (strcmp(dow, "wed") == 0 || strcmp(dow, "wednesday") == 0) {
+		newnode_sd->dow = 3;
+	}
+	else if (strcmp(dow, "thur") == 0 || strcmp(dow, "thurthday") == 0) {
+		newnode_sd->dow = 4;
+	}
+	else if (strcmp(dow, "fri") == 0 || strcmp(dow, "friday") == 0) {
+		newnode_sd->dow = 5;
+	}
+	else if (strcmp(dow, "sat") == 0 || strcmp(dow, "saturday") == 0) {
+		newnode_sd->dow = 6;
+	}
+
 	fprintf(stdout, "Enter Start Time (8:00 ~ 24:00) : ");
+	char garbage;
 	fscanf(stdin, "%d", &newnode_sd->start_time);
 	if (newnode_sd->start_time < 8 || newnode_sd->start_time > 24) {
 		fprintf(stdout, "Enter Start Time (8:00 ~ 24:00) : ");
@@ -41,6 +67,7 @@ void add_sd() {
 	if (newnode_sd->end_time < 8 || newnode_sd->end_time > 24) {
 		fprintf(stdout, "Enter End Time (8:00 ~ 24:00) : ");
 		fscanf(stdin, "%d", &newnode_sd->end_time);
+		fscanf(stdin, "%c", &garbage);
 	}
 	fprintf(stdout, "Enter other details\n");
 	fgets(newnode_sd->etc, 400, stdin);
