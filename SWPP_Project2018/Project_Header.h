@@ -39,6 +39,7 @@ void del_mm(int num);
 //fileIO
 int readFile();
 int saveFile();
+int password();
 
 //printData
 int printFirstMenu();

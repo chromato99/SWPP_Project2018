@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="소스 파일\Tetris">
+      <UniqueIdentifier>{e6a965e7-a7aa-4dd9-b3eb-abf4099a0355}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="temp.c">
@@ -24,32 +27,32 @@
     <ClCompile Include="addSearchDelete.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="tetris.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="ConsoleController.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="GameDrawer.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="BlockMaker.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="BlockController.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="BlockDetecter.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="GameManager.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="printData.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="fileIO.c">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockController.c">
+      <Filter>소스 파일\Tetris</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockDetecter.c">
+      <Filter>소스 파일\Tetris</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockMaker.c">
+      <Filter>소스 파일\Tetris</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleController.c">
+      <Filter>소스 파일\Tetris</Filter>
+    </ClCompile>
+    <ClCompile Include="GameDrawer.c">
+      <Filter>소스 파일\Tetris</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.c">
+      <Filter>소스 파일\Tetris</Filter>
+    </ClCompile>
+    <ClCompile Include="tetris.c">
+      <Filter>소스 파일\Tetris</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

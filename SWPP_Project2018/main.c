@@ -19,6 +19,7 @@ MM* mm_next = NULL;
 MM* mm_current = NULL;
 MM* mm_prev = NULL;
 MM* mm_end = NULL;
+int tetris = 0;
 
 CONSOLE_CURSOR_INFO cursorInfo = { 0, };  //cursor setting
 
@@ -43,6 +44,7 @@ int main() {
 		fscanf(stdin, "%c", &check);
 		fscanf(stdin, "%c", &garbage);
 		if (check == 'y') {
+			tetris++;
 			break;
 		}
 	}
@@ -60,18 +62,21 @@ int main() {
 		}
 		else if (num == 2) {
 			while (i != 0) {
+				if (mm_start == NULL && tetris == 0) {
+					Tetris();
+				}
 				i = printMemoList();
 			}
 		}
 	}
-	saveFile();
+	num = saveFile();
 
     return 0;
 }
 
 void first_title() {
 	char c;
-	printf("\n\n\n\n\n\t\t\t [WELCOME SCHEDULE]\n\n\n");
+	printf("\n\n\n\n\n\t\t\t >[WELCOME to GOLDEN TIME]<\n\n\n");
 	printf("\t>This program is schedule management program.\n");
 	printf("\t>Please report the bug to chromato99@outlook.com.\n\n\n");
 	printf("\t Program is written by KIM BEOMGI, HWANG SUJEONG, SEO JIWON, KWON UHYEOK\n");

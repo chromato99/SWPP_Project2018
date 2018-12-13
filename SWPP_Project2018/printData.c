@@ -39,7 +39,6 @@ int printFirstMenu() {
 					gotoxy(1, y);
 					putc('>', stdout);
 				}
-
 			}
 			else if (key == 72 && y > 0) { //lower direction key
 				gotoxy(1, y--);
@@ -62,12 +61,12 @@ int printFirstMenu() {
 	}
 }
 
-void printSchedule() {
+void printSchedule() {  //스케쥴 해당되는 위치에 출력
 	int i = 0;
-	int y = 11 + (sd_current->start_time - 8) * 8;
-	gotoxy((5 + (sd_current->dow * 16)), y);
+	int y = 9 + ((sd_current->start_time - 8) * 8);
+	gotoxy((3 + (sd_current->dow * 16)), y);
 	while (sd_current->title[i]) {
-		putchar(sd_current->title[i]);
+		putc(sd_current->title[i], stdout);
 		if (i % 15 == 14) {
 			y++;
 			gotoxy((5 + (sd_current->dow * 16)), y);
@@ -83,7 +82,6 @@ int printTable() {
 	int time = 9;
 	int day = 0;
 	int col = 0;
-	char input = "";
 
 
 	// tab : array
@@ -284,7 +282,8 @@ int printMemoList() {
 
 	while (mm_current) {
 		fprintf(stdout, "   %d:%d:%d  ", mm_current->year, mm_current->month, mm_current->date);
-		puts(mm_current->title);
+		fputs(mm_current->title, stdout);
+		mm_current = mm_current->next;
 	}
 
 	fprintf(stdout, "\n\nPress 'a' to add memo\n");
@@ -293,31 +292,40 @@ int printMemoList() {
 
 	char key;
 	int y = 1;
+
+	if (mm_start != NULL) {
+		gotoxy(1, y);
+		putc('>', stdout);
+	}
+	
 	while (1) {
 		if (kbhit()) {  //keyboard input
 			key = getch();
-			if (key == 80 && y > 1) { //upper direction key
+			if (key == 72 && y > 1) { //upper direction key
 				gotoxy(1, y--);
 				putc(' ', stdout);
 				gotoxy(1, y);
 				putc('>', stdout);
 			}
-			else if (key == 72 && y < mm_count) { //lower direction key
+			else if (key == 80 && y < mm_count) { //lower direction key
 				gotoxy(1, y++);
 				putc(' ', stdout);
 				gotoxy(1, y);
 				putc('>', stdout);
 			}
 			else if (key == 13) {  //enter key
-				printMemo(--y);
+				if (mm_start != NULL) {
+					printMemo(--y);
+					return 1;
+				}
 			}
 			else if (key == 'a') {
 				add_mm();
-				return 1;
+				return 2;
 			}
 			else if (key == 'd') {
 				del_mm(--y);
-				return 2;
+				return 3;
 			}
 			else if (key == 8) {
 				return 0;
@@ -338,7 +346,7 @@ void printMemo(int n) {
 	printf("%d:%d:%d\n\n", mm_current->year, mm_current->month, mm_current->date);
 	puts(mm_current->memo);
 	
-
+	printf("\n\n Press Backspace to go back");
 	char key;
 	while (1) {
 		if (kbhit()) {  //keyboard input
